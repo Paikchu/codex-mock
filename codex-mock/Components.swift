@@ -607,74 +607,6 @@ struct CodexCanvasChrome<Content: View>: View {
     }
 }
 
-struct CodexTopRightToolbar: View {
-    let actions: [CodexToolbarAction]
-
-    var body: some View {
-        HStack(spacing: 14) {
-            if let first = actions.first {
-                iconButton(symbol: first.symbolName)
-            }
-
-            OpenButton()
-
-            Rectangle()
-                .fill(CodexPalette.stroke)
-                .frame(width: 1, height: 28)
-
-            ForEach(actions.dropFirst()) { action in
-                iconButton(symbol: action.symbolName)
-            }
-        }
-    }
-
-    private func iconButton(symbol: String) -> some View {
-        Button {} label: {
-            Image(systemName: symbol)
-                .font(.system(size: 17, weight: .medium))
-                .foregroundStyle(CodexPalette.textSecondary)
-                .frame(width: 30, height: 30)
-        }
-        .buttonStyle(.plain)
-    }
-}
-
-struct OpenButton: View {
-    var body: some View {
-        Button {} label: {
-            HStack(spacing: 10) {
-                RoundedRectangle(cornerRadius: 7, style: .continuous)
-                    .fill(CodexPalette.accentBlue)
-                    .frame(width: 22, height: 22)
-                    .overlay(
-                        Image(systemName: "square.and.pencil")
-                            .font(.system(size: 12, weight: .semibold))
-                            .foregroundStyle(.white)
-                    )
-
-                Text("Open")
-                    .font(.system(size: 17, weight: .semibold))
-                    .foregroundStyle(CodexPalette.textPrimary)
-
-                Image(systemName: "chevron.down")
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(CodexPalette.textSecondary)
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 10)
-            .background(
-                RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .fill(Color.white.opacity(0.025))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 16, style: .continuous)
-                            .stroke(CodexPalette.stroke, lineWidth: 1)
-                    )
-            )
-        }
-        .buttonStyle(.plain)
-    }
-}
-
 struct CodexMarkView: View {
     var body: some View {
         ZStack {
@@ -735,8 +667,6 @@ struct EmptyHomeView: View {
             }
 
             Spacer()
-
-            CodexTopRightToolbar(actions: data.toolbarActions)
         }
     }
 
@@ -860,6 +790,7 @@ struct ConversationView: View {
 
                 CodexComposer(text: $composerText, placeholder: "Request follow-up changes")
                     .frame(maxWidth: appearance.composerMaxWidth)
+                    .padding(.top, appearance.conversationComposerTopPadding)
             }
             .padding(.horizontal, 30)
             .padding(.top, appearance.canvasTopPadding)
@@ -885,8 +816,6 @@ struct ConversationView: View {
             }
 
             Spacer()
-
-            CodexTopRightToolbar(actions: data.toolbarActions)
         }
     }
 }
@@ -973,12 +902,12 @@ struct CodexComposer: View {
         VStack(alignment: .leading, spacing: 18) {
             ZStack(alignment: .topLeading) {
                 TextEditor(text: $text)
-                    .font(.system(size: 17, weight: .medium))
+                    .font(.system(size: 17, weight: appearance.composerTextWeight))
                     .foregroundStyle(CodexPalette.textPrimary)
                     .scrollContentBackground(.hidden)
                     .frame(minHeight: appearance.composerEditorHeight, maxHeight: appearance.composerEditorHeight)
-                    .padding(.horizontal, 14)
-                    .padding(.top, 10)
+                    .padding(.horizontal, appearance.composerTextHorizontalPadding)
+                    .padding(.top, appearance.composerTextTopPadding)
 
                 if text.isEmpty {
                 Text(placeholder)

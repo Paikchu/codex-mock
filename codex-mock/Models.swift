@@ -209,17 +209,21 @@ struct CodexShellAppearance: Equatable {
     let canvasTopPadding: CGFloat
     let composerEditorHeight: CGFloat
     let composerMaxWidth: CGFloat
+    let conversationComposerTopPadding: CGFloat
+    let composerTextHorizontalPadding: CGFloat
+    let composerTextTopPadding: CGFloat
+    let composerTextWeight: Font.Weight
     let bodyTextSize: CGFloat
     let bodyLineSpacing: CGFloat
 
     static let `default` = CodexShellAppearance(
         contentScale: 1,
-        sidebarMaterialOpacity: 0.52,
-        sidebarGradientTopOpacity: 0.62,
-        sidebarGradientBottomOpacity: 0.52,
+        sidebarMaterialOpacity: 0.64,
+        sidebarGradientTopOpacity: 0.72,
+        sidebarGradientBottomOpacity: 0.62,
         sidebarWidth: 304,
         sidebarHorizontalPadding: 12,
-        sidebarTopInset: 28,
+        sidebarTopInset: 40,
         sidebarActionSpacing: 6,
         sidebarActionVerticalPadding: 8,
         sidebarLeadingIconWidth: 22,
@@ -233,6 +237,10 @@ struct CodexShellAppearance: Equatable {
         canvasTopPadding: 12,
         composerEditorHeight: 74,
         composerMaxWidth: 1040,
+        conversationComposerTopPadding: 24,
+        composerTextHorizontalPadding: 20,
+        composerTextTopPadding: 16,
+        composerTextWeight: .regular,
         bodyTextSize: 16,
         bodyLineSpacing: 7
     )

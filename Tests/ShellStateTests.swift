@@ -18,6 +18,10 @@ struct ShellStateTests {
             initialState.canvas == .conversation,
             "Initial state should show the conversation canvas when a thread exists."
         )
+        precondition(
+            data.toolbarActions.isEmpty,
+            "Top toolbar actions should be removed from the mock shell."
+        )
 
         let emptyProject = data.projects.first { $0.title == "CodexMock" }!
         let emptyState = initialState.selectingProject(emptyProject)
@@ -108,16 +112,16 @@ struct ShellStateTests {
             "Shell should fill the window bounds without leaving an outer black border."
         )
         precondition(
-            appearance.sidebarMaterialOpacity == 0.52,
-            "Sidebar should lean more transparent so background color can bleed through."
+            appearance.sidebarMaterialOpacity == 0.64,
+            "Sidebar should read more opaque so the navigation feels denser."
         )
         precondition(
-            appearance.sidebarGradientTopOpacity == 0.62,
-            "Sidebar top gradient should stay tinted but no longer feel opaque."
+            appearance.sidebarGradientTopOpacity == 0.72,
+            "Sidebar top gradient should feel more solid while keeping the tint."
         )
         precondition(
-            appearance.sidebarGradientBottomOpacity == 0.52,
-            "Sidebar bottom gradient should remain softer than the top tint."
+            appearance.sidebarGradientBottomOpacity == 0.62,
+            "Sidebar bottom gradient should also gain opacity while staying softer than the top."
         )
         precondition(
             appearance.sidebarWidth == 304,
@@ -128,8 +132,8 @@ struct ShellStateTests {
             "Sidebar content should sit closer to the edges for a denser, more modern layout."
         )
         precondition(
-            appearance.sidebarTopInset == 28,
-            "Sidebar should move upward to free more room for the thread list."
+            appearance.sidebarTopInset == 40,
+            "Sidebar should leave more breathing room above the New thread button."
         )
         precondition(
             appearance.sidebarActionSpacing == 6,
@@ -182,6 +186,22 @@ struct ShellStateTests {
         precondition(
             appearance.composerMaxWidth == 1040,
             "Composer should use a narrower width cap so the input box does not stretch too wide."
+        )
+        precondition(
+            appearance.conversationComposerTopPadding == 24,
+            "Conversation composer should leave more space above the input field."
+        )
+        precondition(
+            appearance.composerTextHorizontalPadding == 20,
+            "Composer text should keep extra horizontal inset from the border."
+        )
+        precondition(
+            appearance.composerTextTopPadding == 16,
+            "Composer text should keep extra top inset from the border."
+        )
+        precondition(
+            appearance.composerTextWeight == .regular,
+            "Composer input text should use regular weight instead of a bold style."
         )
         precondition(
             appearance.bodyTextSize == 16,
